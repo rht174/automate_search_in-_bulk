@@ -3,14 +3,15 @@ import pandas as pd
 from selenium import webdriver
 
 # Web Drivers for Browser
-exec_path = r"chromedriver.exe"                                 # change path to your webdriver (chrome or firefox)
+exec_path = r"webdriver/chromedriver.exe"                       # change path to your webdriver (chrome or firefox)
 driver = webdriver.Chrome(executable_path=exec_path)            # for chrome
 # driver = webdriver.Firefox(executable_path = exec_path)       # for firefox
 driver.maximize_window()
 
 # importing and conversion to proper string with+
-df = pd.read_csv(r"", encoding='latin-1')                     # Provide path to your csv file containing search queries
-with_comma_dot_and = df[''].to_list()                         # Specify column name for your data
+# maximum tab that can be simultaneously opened may vary
+df = pd.read_csv(r"data/search_data.csv", encoding='latin-1')  # Provide path to your csv file containing search queries
+with_comma_dot_and = df['Costume'].to_list()                   # Specify column name for your data
 print(with_comma_dot_and)
 
 # remove comma                # if you have comma in your search query
@@ -56,10 +57,10 @@ additional_query_at_end = r""           # for adding extra custom query
 
 for i in range(len(final_plus_list)):
     driver.execute_script("window.open()")
-    driver.switch_to.window(driver.window_handles[i + 2])
+    driver.switch_to.window(driver.window_handles[i])
     entry_url = r"https://www.google.com/search?client=firefox-b-d&q=" + final_plus_list[
         i] + additional_query_at_end
     driver.get(entry_url)
-    time.sleep(1.5)
+    time.sleep(1.5)             # pausing for 1.5 sec so that google wont block your automate searches
     print(i + 1, entry_url, driver.title)
 
